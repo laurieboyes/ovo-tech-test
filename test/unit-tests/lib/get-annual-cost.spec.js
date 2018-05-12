@@ -76,4 +76,32 @@ describe('getAnnualCost()', () => {
 			);
 	});
 
+	it('should throw an error if a non-number annualPowerUsage is provided', () => {
+		expect(() => getAnnualCost({
+			annualPowerUsage: 'lol',
+			annualGasUsage: 2300
+		})).to.throw('Invalid power usage provided: string lol')
+	});
+
+	it('should throw an error if a non-number annualPowerUsage is given as NaN', () => {
+		expect(() => getAnnualCost({
+			annualPowerUsage: +'lol',
+			annualGasUsage: 2300
+		})).to.throw('Invalid power usage provided: number NaN')
+	});
+
+	it('should throw an error if a non-number annualGasUsage is provided', () => {
+		expect(() => getAnnualCost({
+			annualPowerUsage: 234,
+			annualGasUsage: 'lol'
+		})).to.throw('Invalid gas usage provided: string lol')
+	});
+
+	it('should throw an error if a non-number annualGasUsage is given as NaN', () => {
+		expect(() => getAnnualCost({
+			annualPowerUsage: 234,
+			annualGasUsage: +'lol'
+		})).to.throw('Invalid gas usage provided: number NaN')
+	});
+
 });
