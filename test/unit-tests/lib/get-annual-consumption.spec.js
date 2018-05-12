@@ -14,10 +14,10 @@ describe('getAnnualConsumption()', () => {
 				{
 					"tariff": "some-energy",
 					"rates": {
-						"power": 0.1367,
-						"gas": 0.0288 // fee per kilowatt hour
+						"power": 3,
+						"gas": 5 // fee per kilowatt hour
 					},
-					"standing_charge": 8.33
+					"standing_charge": 10
 				}
 			],
 			vatMultiplier: 1.1
@@ -31,12 +31,22 @@ describe('getAnnualConsumption()', () => {
 	});
 
 	it('should return the total annual consumption in kWh, with consideration to VAT and standing charges, rounded to two decimal places', () => {
+
+		// 40 is what you want to spend
+		// so 40 with vat taken off is what will actually go towards your bill
+		// remove the standing charge to work out how much will actually go towards buying energy at the given rate
+		// multiply by 12 to get the annual amount spent on energy at the given rate
+
+		// expectedAnnualConsumption = ( ( ( targetMonthlySpend / vatMultiplier ) - monthlyStandingCharge ) * 12 ) / ratePerKwh
+		// expectedAnnualConsumption = ( ( ( 40 / 1.1 ) - 10) * 12) / 5
+		const expectedAnnualConsumption = 63.27;
+
 		expect(getAnnualConsumption({
 			tariffName: 'some-energy',
 			fuelType: 'gas',
 			targetMonthlySpend: 40
 		}))
-			.to.equal(14515.42);
+			.to.equal(expectedAnnualConsumption);
 	});
 
 	it('should throw an error if a non-string tariffName is provided', () => {
@@ -85,45 +95,5 @@ describe('getAnnualConsumption()', () => {
 			fuelType: 'nuclear',
 			targetMonthlySpend: 40
 		})).to.throw('Invalid fuel type \'nuclear\' for tariff with name \'some-energy\'')
-	});
-
-	context('when VAT changes', () => {
-
-		beforeEach(() => {
-			mocks.vatMultiplier = 1.05
-
-			getAnnualConsumption = proxyquire('../../../src/lib/get-annual-consumption', {
-				'../config/prices.json': mocks.prices,
-				'../config/vat-multiplier.json': mocks.vatMultiplier,
-			});
-		})
-		it('should return different usage reflecting the changed VAT', () => {
-			expect(getAnnualConsumption({
-				tariffName: 'some-energy',
-				fuelType: 'gas',
-				targetMonthlySpend: 40
-			}))
-				.to.equal(13855.63);
-		})
-	});
-
-	context('when there\'s no standing charge for the tariff', () => { // you never know
-
-		beforeEach(() => {
-			mocks.prices.find(p => p.tariff === 'some-energy').standing_charge = 0;
-
-			getAnnualConsumption = proxyquire('../../../src/lib/get-annual-consumption', {
-				'../config/prices.json': mocks.prices,
-				'../config/vat-multiplier.json': mocks.vatMultiplier,
-			});
-		})
-		it('should return increased usage reflecting the reduced rate', () => {
-			expect(getAnnualConsumption({
-				tariffName: 'some-energy',
-				fuelType: 'gas',
-				targetMonthlySpend: 40
-			}))
-				.to.equal(18333.33);
-		})
 	});
 });

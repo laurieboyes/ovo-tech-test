@@ -15,7 +15,6 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 		throw new Error(`Invalid target monthly spend provided: ${typeof targetMonthlySpend} ${targetMonthlySpend}`);
 	}
 
-
 	const tariffPrice = prices.find(p => p.tariff === tariffName)
 	if (!tariffPrice) {
 		throw new Error(`No tariff found with name '${tariffName}'`);
@@ -28,10 +27,20 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 		throw new Error(`Invalid fuel type '${fuelType}' for tariff with name '${tariffName}'`);
 	}
 
-	const yearlySpendMinusStandingCharge = (targetMonthlySpend - standingCharge) * 12;
-	const kwhAnnually = yearlySpendMinusStandingCharge / ratePerKwh;
+	// say 40 is what you want to spend
+	// so 40 with vat taken off is what will actually go towards your bill
+	// remove the standing charge to work out how much will actually go towards buying energy at the given rate
+	// multiply by 12 to get the annual amount spent on energy at the given rate
 
-	const kwhAnnuallyIncludingVat = kwhAnnually * vatMultiplier;
+	// annualConsumption = ( ( ( targetMonthlySpend / vatMultiplier ) - monthlyStandingCharge ) * 12 ) / ratePerKwh
+	// annualConsumption = ( ( ( 40 / 1.1 ) - 10) * 12) / 5
 
-	return toTwoDecimalPlaces(kwhAnnuallyIncludingVat);
+	const monthlySpendBeforeVat = targetMonthlySpend / vatMultiplier;
+
+	const monthlySpendAfterStandingCharge = monthlySpendBeforeVat - standingCharge;
+	const annualSpendAfterStandingCharge = monthlySpendAfterStandingCharge * 12;
+
+	const kwhAnnually = annualSpendAfterStandingCharge / ratePerKwh;
+
+	return toTwoDecimalPlaces(kwhAnnually);
 }

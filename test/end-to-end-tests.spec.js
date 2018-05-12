@@ -12,10 +12,10 @@ describe('End-to-end tests', () => {
 	describe('usage', () => {
 		it('should respond with the expected values', async () => {
 			expect(await getExecutionResults('dist/usage greener-energy power 40'))
-				.to.equal('Total annual consumption: 2584.47');
+				.to.equal('Total annual consumption: 2313.36');
 
 			expect(await getExecutionResults('dist/usage better-energy gas 25'))
-				.to.equal('Total annual consumption: 7293.13');
+				.to.equal('Total annual consumption: 6449.8');
 		});
 	});
 
