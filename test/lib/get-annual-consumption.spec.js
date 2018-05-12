@@ -39,4 +39,44 @@ describe('getAnnualConsumption()', () => {
 		}))
 			.to.equal(14515.42);
 	});
+
+	it('should throw an error if a non-string tariffName is provided', () => {
+		expect(() => getAnnualConsumption({
+			tariffName: null,
+			fuelType: 'gas',
+			targetMonthlySpend: 40
+		})).to.throw('Invalid tarrif name provided')
+	});
+
+	it('should throw an error if a non-string fuelType is provided', () => {
+		expect(() => getAnnualConsumption({
+			tariffName: 'dsfsdf',
+			fuelType: null,
+			targetMonthlySpend: 40
+		})).to.throw('Invalid fuel type provided')
+	});
+
+	it('should throw an error if a non-number targetMonthlySpend is provided', () => {
+		expect(() => getAnnualConsumption({
+			tariffName: 'dsfsdf',
+			fuelType: 'gas',
+			targetMonthlySpend: 'lol'
+		})).to.throw('Invalid target monthly spend provided: string lol')
+	});
+
+	it('should throw an error if the tariff name is not found in the prices index', () => {
+		expect(() => getAnnualConsumption({
+			tariffName: 'whatever',
+			fuelType: 'gas',
+			targetMonthlySpend: 40
+		})).to.throw('No tarrif found with name whatever')
+	});
+
+	it('should throw an error if the fuel type is not found against the tariff in the prices index', () => {
+		expect(() => getAnnualConsumption({
+			tariffName: 'some-energy',
+			fuelType: 'nuclear',
+			targetMonthlySpend: 40
+		})).to.throw('Invalid fuel type nuclear for tarrif with name some-energy')
+	});
 });
