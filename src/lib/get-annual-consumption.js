@@ -15,6 +15,7 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 		throw new Error(`Invalid target monthly spend provided: ${typeof targetMonthlySpend} ${targetMonthlySpend}`);
 	}
 
+	
 	const tariffPrice = prices.find(p => p.tariff === tariffName)
 	if (!tariffPrice) {
 		throw new Error(`No tarrif found with name ${tariffName}`);
