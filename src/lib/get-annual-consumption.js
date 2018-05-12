@@ -31,6 +31,7 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 	// so 40 with vat taken off is what will actually go towards your bill
 	// remove the standing charge to work out how much will actually go towards buying energy at the given rate
 	// multiply by 12 to get the annual amount spent on energy at the given rate
+	// divide the annual power spend by the rate per kWh to get the annual consumption in kWh
 
 	// annualConsumption = ( ( ( targetMonthlySpend / vatMultiplier ) - monthlyStandingCharge ) * 12 ) / ratePerKwh
 	// annualConsumption = ( ( ( 40 / 1.1 ) - 10) * 12) / 5
