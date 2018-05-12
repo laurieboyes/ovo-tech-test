@@ -18,4 +18,20 @@ describe('End-to-end tests', () => {
 				.to.equal('Total annual consumption: 7293.13');
 		});
 	});
+
+	describe('cost', () => {
+		it('should respond with the expected values', async () => {
+			expect(await getExecutionResults('dist/cost 2000 2300'))
+				.to.equal('Total annual cost:\n' +
+					'better-energy 557.47\n' +
+					'2yr-fixed 576.03\n' +
+					'simpler-energy 582.54');
+
+			expect(await getExecutionResults('dist/cost 2000 0'))
+				.to.equal('Total annual cost:\n' +
+					'better-energy 557.47\n' +
+					'2yr-fixed 576.03\n' +
+					'simpler-energy 582.54');
+		});
+	});
 });

@@ -55,8 +55,8 @@ describe('getAnnualCost()', () => {
 
 	it('should return an array of tarrif names and annual costs, inclusive of VAT, sorted by cheapest first', () => {
 		expect(getAnnualCost({
-			annualPowerUsage: 2000,
-			annualGasUsage: 2300
+			powerUsage: 2000,
+			gasUsage: 2300
 		}))
 			.to.deep.equal(
 				[
@@ -79,8 +79,8 @@ describe('getAnnualCost()', () => {
 
 	it('should return tariffs all that supply all energy types the customer is supplied', () => {
 		expect(getAnnualCost({
-			annualPowerUsage: 2000,
-			annualGasUsage: 0 // no gas
+			powerUsage: 2000,
+			gasUsage: 0 // no gas
 		}).map(t => t.name)).to.deep.equal([
 			'energy2',
 			'energy1',
@@ -91,36 +91,36 @@ describe('getAnnualCost()', () => {
 
 	it('should not return tariffs that don\'t include all energy types the customer is supplied', () => {
 		expect(getAnnualCost({
-			annualPowerUsage: 2000,
-			annualGasUsage: 2300
+			powerUsage: 2000,
+			gasUsage: 2300
 		}).map(t => t.name)).to.not.include('energy3 (no gas)');
 	});
 
-	it('should throw an error if a non-number annualPowerUsage is provided', () => {
+	it('should throw an error if a non-number powerUsage is provided', () => {
 		expect(() => getAnnualCost({
-			annualPowerUsage: 'lol',
-			annualGasUsage: 2300
+			powerUsage: 'lol',
+			gasUsage: 2300
 		})).to.throw('Invalid power usage provided: string lol')
 	});
 
-	it('should throw an error if a non-number annualPowerUsage is given as NaN', () => {
+	it('should throw an error if a non-number powerUsage is given as NaN', () => {
 		expect(() => getAnnualCost({
-			annualPowerUsage: +'lol',
-			annualGasUsage: 2300
+			powerUsage: +'lol',
+			gasUsage: 2300
 		})).to.throw('Invalid power usage provided: number NaN')
 	});
 
-	it('should throw an error if a non-number annualGasUsage is provided', () => {
+	it('should throw an error if a non-number gasUsage is provided', () => {
 		expect(() => getAnnualCost({
-			annualPowerUsage: 234,
-			annualGasUsage: 'lol'
+			powerUsage: 234,
+			gasUsage: 'lol'
 		})).to.throw('Invalid gas usage provided: string lol')
 	});
 
-	it('should throw an error if a non-number annualGasUsage is given as NaN', () => {
+	it('should throw an error if a non-number gasUsage is given as NaN', () => {
 		expect(() => getAnnualCost({
-			annualPowerUsage: 234,
-			annualGasUsage: +'lol'
+			powerUsage: 234,
+			gasUsage: +'lol'
 		})).to.throw('Invalid gas usage provided: number NaN')
 	});
 
@@ -136,8 +136,8 @@ describe('getAnnualCost()', () => {
 		})
 		it('should return different annual costs, reflecting the changed VAT', () => {
 			expect(getAnnualCost({
-				annualPowerUsage: 2000,
-				annualGasUsage: 2300
+				powerUsage: 2000,
+				gasUsage: 2300
 			}))
 				.to.deep.equal(
 					[
@@ -170,8 +170,8 @@ describe('getAnnualCost()', () => {
 		})
 		it('should reduce the annual cost for that tarrif', () => {
 			expect(getAnnualCost({
-				annualPowerUsage: 2000,
-				annualGasUsage: 2300
+				powerUsage: 2000,
+				gasUsage: 2300
 			}))
 				.to.deep.equal(
 					[
