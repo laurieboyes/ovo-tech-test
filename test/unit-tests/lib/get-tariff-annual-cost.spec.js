@@ -1,7 +1,7 @@
 const { expect } = require('chai');
-const proxyquire = require('proxyquire');
+const proxyquire = require('proxyquire').noCallThru();
 
-describe.only('getTariffAnnualCost()', () => {
+describe('getTariffAnnualCost()', () => {
 
 	let getTariffAnnualCost;
 	let mocks;

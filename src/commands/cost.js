@@ -1,5 +1,5 @@
 const program = require('commander');
-const getAnnualCost = require('../lib/get-annual-cost');
+const getAllTariffsAnnualCost = require('../lib/get-all-tariffs-annual-cost');
 
 program
 	.arguments('<powerUsage> <gasUsage>')
@@ -15,7 +15,7 @@ const gasUsage = +gasUsageStr;
 
 try {
 	console.log(`Total annual cost:${'\n'}${
-		getAnnualCost({ powerUsage, gasUsage })
+		getAllTariffsAnnualCost({ powerUsage, gasUsage })
 			.map(tariff => `${tariff.name} ${tariff.annualCost}`)
 			.join('\n')
 		}`);
