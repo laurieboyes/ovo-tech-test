@@ -3,7 +3,7 @@ const getTariffAnnualCost = require('./get-tariff-annual-cost');
 
 module.exports = ({ powerUsage, gasUsage }) => {
 
-	// I recognise the irony of deciding not to use TypeScript in favour of all of these manual type checks
+	// I recognise the irony of deciding not to use TypeScript and then doing all of these manual type checks
 	if (isNaN(powerUsage)) {
 		throw new Error(`Invalid power usage provided: ${typeof powerUsage} ${powerUsage}`);
 	}

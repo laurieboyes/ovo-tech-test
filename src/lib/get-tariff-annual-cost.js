@@ -3,7 +3,7 @@ const toTwoDecimalPlaces = require('./util/to-two-decimal-places');
 
 module.exports = ({ monthlyStandingCharge, powerRate, gasRate, powerUsage, gasUsage }) => {
 
-	// I recognise the irony in deciding not to use TypeScript in favour of all of these manual type checks
+	// I recognise the irony of deciding not to use TypeScript and then doing all of these manual type checks
 	if (isNaN(monthlyStandingCharge)) {
 		throw new Error(`Invalid monthlyStandingCharge provided: ${typeof monthlyStandingCharge} ${monthlyStandingCharge}`);
 	}

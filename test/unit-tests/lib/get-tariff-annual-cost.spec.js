@@ -16,7 +16,7 @@ describe('getTariffAnnualCost()', () => {
 		});
 	});
 
-	it('should calculate the annual cost tariff and usage info', () => {
+	it('should calculate the annual cost given tariff and usage info', () => {
 
 		// (assuming gas and power provided)
 		// expectedAnnualCost = ( (powerUsage * powerRate) + (gasUsage * gasRate) + (monthlyStandingCharge * 12 * 2) ) * vatMultiplier
@@ -32,7 +32,7 @@ describe('getTariffAnnualCost()', () => {
 		})).to.equal(expectedAnnualCost)
 	})
 
-	it('should calculate the annual cost tariff and usage info if the usage of gas is 0', () => {
+	it('should calculate the annual cost given tariff and usage info if the usage of gas is 0', () => {
 
 		// expectedAnnualCost = ( (powerUsage * powerRate) + (gasUsage * gasRate) + (monthlyStandingCharge * 12 * 1) ) * vatMultiplier
 		// expectedAnnualCost = ( (60 * 3) + (0 * 5) + (10 * 1 * 12) ) * 1.1
@@ -47,7 +47,7 @@ describe('getTariffAnnualCost()', () => {
 		})).to.equal(expectedAnnualCost)
 	})
 
-	it('should calculate the annual cost tariff and usage info if the usage of power is 0', () => {
+	it('should calculate the annual cost given tariff and usage info if the usage of power is 0', () => {
 
 		// expectedAnnualCost = ( (powerUsage * powerRate) + (gasUsage * gasRate) + (monthlyStandingCharge * 12 * 1) ) * vatMultiplier
 		// expectedAnnualCost = ( (0 * 3) + (200 * 5) + (10 * 1 * 12) ) * 1.1

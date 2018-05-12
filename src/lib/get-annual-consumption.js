@@ -4,7 +4,7 @@ const vatMultiplier = require('../config/vat-multiplier.json');
 
 module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 
-	// I recognise the irony of deciding not to use TypeScript in favour of all of these manual type checks
+	// I recognise the irony of deciding not to use TypeScript and then doing all of these manual type checks
 	if (typeof tariffName !== 'string' || !tariffName.length) {
 		throw new Error(`Invalid tariff name provided: ${tariffName}`);
 	}
@@ -20,7 +20,7 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 		throw new Error(`No tariff found with name '${tariffName}'`);
 	}
 
-	const standingCharge = tariffPrice.standing_charge;
+	const monthlyStandingCharge = tariffPrice.standing_charge;
 
 	const ratePerKwh = tariffPrice.rates[fuelType];
 	if (!ratePerKwh) {
@@ -37,7 +37,7 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 
 	const monthlySpendBeforeVat = targetMonthlySpend / vatMultiplier;
 
-	const monthlySpendAfterStandingCharge = monthlySpendBeforeVat - standingCharge;
+	const monthlySpendAfterStandingCharge = monthlySpendBeforeVat - monthlyStandingCharge;
 	const annualSpendAfterStandingCharge = monthlySpendAfterStandingCharge * 12;
 
 	const kwhAnnually = annualSpendAfterStandingCharge / ratePerKwh;
