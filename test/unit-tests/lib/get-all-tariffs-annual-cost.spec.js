@@ -1,5 +1,6 @@
-const { expect } = require('chai');
-const sinon = require('sinon');
+const { expect } = require('chai')
+	.use(require('sinon-chai'));
+const sinon = require('sinon')
 const proxyquire = require('proxyquire').noCallThru();
 
 describe('getAllTariffsAnnualCost()', () => {
@@ -124,7 +125,7 @@ describe('getAllTariffsAnnualCost()', () => {
 	it('should return all tariffs that cater to gas when there is only gas usage, regardless of whether or not the tariff caters for power', () => {
 		expect(getAllTariffsAnnualCost({
 			powerUsage: 0, // no power
-			gasUsage: 2300 
+			gasUsage: 2300
 		})).to.deep.equal([
 			{
 				annualCost: 2,
@@ -150,6 +151,22 @@ describe('getAllTariffsAnnualCost()', () => {
 			powerUsage: 2000,
 			gasUsage: 2300
 		}).map(t => t.name)).to.not.include('energy5 (no power)');
+	});
+
+	it('should pass the info about the tariff and usage to the getTariffAnnualCost function', () => {
+		getAllTariffsAnnualCost({
+			powerUsage: 2000,
+			gasUsage: 2300
+		});
+
+		// energy1
+		expect(mocks.getTariffAnnualCost).to.have.been.calledWith({
+			gasRate: 0.52,
+			gasUsage: 2300,
+			monthlyStandingCharge: 2.3,
+			powerRate: 0.95,
+			powerUsage: 2000
+		})
 	});
 
 	it('should throw an error if a non-number powerUsage is provided', () => {
