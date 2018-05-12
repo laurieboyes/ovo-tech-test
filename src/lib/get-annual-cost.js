@@ -14,7 +14,7 @@ module.exports = ({ powerUsage, gasUsage }) => {
 
 	return prices
 
-		// filter tariffs that don't cater to usage
+		// filter out tariffs that don't cater to usage
 		.filter(tariff => (
 			(powerUsage === 0 || Boolean(tariff.rates.power)) &&
 			(gasUsage === 0 || Boolean(tariff.rates.gas))
@@ -22,7 +22,6 @@ module.exports = ({ powerUsage, gasUsage }) => {
 
 		.map(tariff => {
 
-			// safe to default these to 0 due to the filtering above
 			const annualPowerCost = powerUsage > 0 ? tariff.rates.power * powerUsage : 0;
 			const annualGasCost = gasUsage > 0 ? tariff.rates.gas * gasUsage : 0;
 
