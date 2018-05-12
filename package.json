@@ -2,8 +2,10 @@
   "name": "ovo",
   "version": "1.0.0",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test/**/*.spec.js",
-    "build": "mkdir dist; nexe -i src/commands/usage.js -o dist/usage"
+    "build": "mkdir dist; nexe -i src/commands/usage.js -o dist/usage",
+    "unit-test": "./node_modules/mocha/bin/mocha ./test/unit-tests/**/*.spec.js",
+    "end-to-end-test": "npm run build; ./node_modules/mocha/bin/mocha ./test/end-to-end-tests.spec.js",
+    "test": "npm run unit-test; npm run end-to-end-test"
   },
   "dependencies": {
     "commander": "^2.15.1"

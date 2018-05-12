@@ -23,7 +23,7 @@ describe('getAnnualConsumption()', () => {
 			vatMultiplier: 1.1
 		}
 
-		getAnnualConsumption = proxyquire('../../src/lib/get-annual-consumption', {
+		getAnnualConsumption = proxyquire('../../../src/lib/get-annual-consumption', {
 			'../config/prices.json': mocks.prices,
 			'../config/vat-multiplier.json': mocks.vatMultiplier,
 		});
@@ -92,7 +92,7 @@ describe('getAnnualConsumption()', () => {
 		beforeEach(() => {
 			mocks.vatMultiplier = 1.05
 
-			getAnnualConsumption = proxyquire('../../src/lib/get-annual-consumption', {
+			getAnnualConsumption = proxyquire('../../../src/lib/get-annual-consumption', {
 				'../config/prices.json': mocks.prices,
 				'../config/vat-multiplier.json': mocks.vatMultiplier,
 			});
@@ -112,7 +112,7 @@ describe('getAnnualConsumption()', () => {
 		beforeEach(() => {
 			mocks.prices.find(p => p.tariff === 'some-energy').standing_charge = 0;
 
-			getAnnualConsumption = proxyquire('../../src/lib/get-annual-consumption', {
+			getAnnualConsumption = proxyquire('../../../src/lib/get-annual-consumption', {
 				'../config/prices.json': mocks.prices,
 				'../config/vat-multiplier.json': mocks.vatMultiplier,
 			});
