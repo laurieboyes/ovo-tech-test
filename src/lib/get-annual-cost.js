@@ -8,8 +8,8 @@ module.exports = ({ powerUsage, gasUsage }) => {
 	if (isNaN(powerUsage)) {
 		throw new Error(`Invalid power usage provided: ${typeof powerUsage} ${powerUsage}`);
 	}
-	if (isNaN(powerUsage)) {
-		throw new Error(`Invalid gas usage provided: ${typeof powerUsage} ${powerUsage}`);
+	if (isNaN(gasUsage)) {
+		throw new Error(`Invalid gas usage provided: ${typeof gasUsage} ${gasUsage}`);
 	}
 
 	return prices
@@ -17,16 +17,18 @@ module.exports = ({ powerUsage, gasUsage }) => {
 		// filter tariffs that don't cater to usage
 		.filter(tariff => (
 			(powerUsage === 0 || Boolean(tariff.rates.power)) &&
-			(powerUsage === 0 || Boolean(tariff.rates.gas))
+			(gasUsage === 0 || Boolean(tariff.rates.gas))
 		))
 
 		.map(tariff => {
-			const annualPowerCost = tariff.rates.power * powerUsage;
-			const annualGasCost = tariff.rates.gas * powerUsage;
+
+			// safe to default these to 0 due to the filtering above
+			const annualPowerCost = powerUsage > 0 ? tariff.rates.power * powerUsage : 0;
+			const annualGasCost = gasUsage > 0 ? tariff.rates.gas * gasUsage : 0;
 
 			// only include standing charge for fuel type customer is being supplied for
 			const annualPowerStandingCharge = powerUsage > 0 ? tariff.standing_charge * 12 : 0;
-			const annualGasStandingCharge = powerUsage > 0 ? tariff.standing_charge * 12 : 0;
+			const annualGasStandingCharge = gasUsage > 0 ? tariff.standing_charge * 12 : 0;
 
 			const annualCostExcludingVat = (
 				annualPowerCost +

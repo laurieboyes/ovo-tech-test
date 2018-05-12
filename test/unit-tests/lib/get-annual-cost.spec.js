@@ -53,7 +53,7 @@ describe('getAnnualCost()', () => {
 
 	});
 
-	it('should return an array of tarrif names and annual costs, inclusive of VAT, sorted by cheapest first', () => {
+	it('should return an array of applicable tarrif names and annual costs, inclusive of VAT, sorted by cheapest first', () => {
 		expect(getAnnualCost({
 			powerUsage: 2000,
 			gasUsage: 2300
@@ -77,15 +77,27 @@ describe('getAnnualCost()', () => {
 	});
 
 
-	it('should return tariffs all that supply all energy types the customer is supplied', () => {
+	it('should return tarrifs that only cater to power if the customer has no gas usage', () => {
 		expect(getAnnualCost({
 			powerUsage: 2000,
 			gasUsage: 0 // no gas
-		}).map(t => t.name)).to.deep.equal([
-			'energy2',
-			'energy1',
-			'energy3 (no gas)',
-			'energy4'
+		})).to.deep.equal([
+			{
+				annualCost: 366.08,
+				name: 'energy2'
+			},
+			{
+				annualCost: 817.52,
+				name: 'energy4'
+			},
+			{
+				annualCost: 1250.92,
+				name: 'energy3 (no gas)'
+			},
+			{
+				annualCost: 2120.36,
+				name: 'energy1'
+			}
 		]);
 	});
 

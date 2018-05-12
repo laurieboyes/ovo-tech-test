@@ -23,15 +23,17 @@ describe('End-to-end tests', () => {
 		it('should respond with the expected values', async () => {
 			expect(await getExecutionResults('dist/cost 2000 2300'))
 				.to.equal('Total annual cost:\n' +
-					'better-energy 557.47\n' +
-					'2yr-fixed 576.03\n' +
-					'simpler-energy 582.54');
+					'better-energy 566.54\n' +
+					'2yr-fixed 585.35\n' +
+					'simpler-energy 592.87');
 
 			expect(await getExecutionResults('dist/cost 2000 0'))
 				.to.equal('Total annual cost:\n' +
-					'better-energy 557.47\n' +
-					'2yr-fixed 576.03\n' +
-					'simpler-energy 582.54');
+					'better-energy 392.03\n' +
+					'simpler-energy 403.41\n' +
+					'2yr-fixed 403.62\n' +
+					'greener-energy 429.2'
+				);
 		});
 	});
 });
