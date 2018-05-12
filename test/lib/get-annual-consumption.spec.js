@@ -30,7 +30,7 @@ describe('getAnnualConsumption()', () => {
 
 	});
 
-	it('should return the total annual consumption in kWh, inclusive of VAT, rounded to two decimal places', () => {
+	it('should return the total annual consumption in kWh, with consideration to VAT and standing charges, rounded to two decimal places', () => {
 		expect(getAnnualConsumption({
 			tariffName: 'some-energy',
 			fuelType: 'gas',
@@ -44,7 +44,7 @@ describe('getAnnualConsumption()', () => {
 			tariffName: null,
 			fuelType: 'gas',
 			targetMonthlySpend: 40
-		})).to.throw('Invalid tarrif name provided')
+		})).to.throw('Invalid tariff name provided')
 	});
 
 	it('should throw an error if a non-string fuelType is provided', () => {
@@ -63,12 +63,20 @@ describe('getAnnualConsumption()', () => {
 		})).to.throw('Invalid target monthly spend provided: string lol')
 	});
 
+	it('should throw an error if a targetMonthlySpend is given as NaN', () => {
+		expect(() => getAnnualConsumption({
+			tariffName: 'dsfsdf',
+			fuelType: 'gas',
+			targetMonthlySpend: +'lol'
+		})).to.throw('Invalid target monthly spend provided: number NaN')
+	});
+
 	it('should throw an error if the tariff name is not found in the prices index', () => {
 		expect(() => getAnnualConsumption({
 			tariffName: 'whatever',
 			fuelType: 'gas',
 			targetMonthlySpend: 40
-		})).to.throw('No tarrif found with name whatever')
+		})).to.throw('No tariff found with name \'whatever\'')
 	});
 
 	it('should throw an error if the fuel type is not found against the tariff in the prices index', () => {
@@ -76,7 +84,7 @@ describe('getAnnualConsumption()', () => {
 			tariffName: 'some-energy',
 			fuelType: 'nuclear',
 			targetMonthlySpend: 40
-		})).to.throw('Invalid fuel type nuclear for tarrif with name some-energy')
+		})).to.throw('Invalid fuel type \'nuclear\' for tariff with name \'some-energy\'')
 	});
 
 	context('when VAT changes', () => {
