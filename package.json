@@ -2,7 +2,8 @@
   "name": "ovo",
   "version": "1.0.0",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test/**/*.spec.js"
+    "test": "./node_modules/mocha/bin/mocha ./test/**/*.spec.js",
+    "build": "mkdir dist; nexe -i src/commands/usage.js -o dist/usage"
   },
   "dependencies": {
     "commander": "^2.15.1"
@@ -10,6 +11,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.1.1",
+    "nexe": "^2.0.0-rc.28",
     "proxyquire": "^2.0.1"
   }
 }

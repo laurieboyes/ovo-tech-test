@@ -7,7 +7,8 @@ program
 
 const [tariffName, fuelType, targetMonthlySpendStr] = program.args;
 if (!tariffName || !fuelType || !targetMonthlySpendStr) {
-	return program.outputHelp();
+	program.outputHelp();
+	process.exit();
 }
 const targetMonthlySpend = +targetMonthlySpendStr
 
