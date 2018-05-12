@@ -16,7 +16,7 @@ const gasUsage = +gasUsageStr;
 try {
 	console.log(`Total annual cost:${'\n'}${
 		getAnnualCost({ powerUsage, gasUsage })
-			.map(tarrif => `${tarrif.name} ${tarrif.annualCost}`)
+			.map(tariff => `${tariff.name} ${tariff.annualCost}`)
 			.join('\n')
 		}`);
 } catch (err) {

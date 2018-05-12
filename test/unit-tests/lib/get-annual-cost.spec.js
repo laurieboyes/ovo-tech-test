@@ -53,7 +53,7 @@ describe('getAnnualCost()', () => {
 
 	});
 
-	it('should return an array of applicable tarrif names and annual costs, inclusive of VAT, sorted by cheapest first', () => {
+	it('should return an array of applicable tariff names and annual costs, inclusive of VAT, sorted by cheapest first', () => {
 		expect(getAnnualCost({
 			powerUsage: 2000,
 			gasUsage: 2300
@@ -77,7 +77,7 @@ describe('getAnnualCost()', () => {
 	});
 
 
-	it('should return tarrifs that only cater to power if the customer has no gas usage', () => {
+	it('should return tariffs that only cater to power if the customer has no gas usage', () => {
 		expect(getAnnualCost({
 			powerUsage: 2000,
 			gasUsage: 0 // no gas
@@ -180,7 +180,7 @@ describe('getAnnualCost()', () => {
 				'../config/vat-multiplier.json': mocks.vatMultiplier,
 			});
 		})
-		it('should reduce the annual cost for that tarrif', () => {
+		it('should reduce the annual cost for that tariff', () => {
 			expect(getAnnualCost({
 				powerUsage: 2000,
 				gasUsage: 2300
