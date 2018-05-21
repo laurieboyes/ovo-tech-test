@@ -34,7 +34,6 @@ module.exports = ({ tariffName, fuelType, targetMonthlySpend }) => {
 	// divide the annual power spend by the rate per kWh to get the annual consumption in kWh
 
 	// annualConsumption = ( ( ( targetMonthlySpend / vatMultiplier ) - monthlyStandingCharge ) * 12 ) / ratePerKwh
-	// annualConsumption = ( ( ( 40 / 1.1 ) - 10) * 12) / 5
 
 	const monthlySpendBeforeVat = targetMonthlySpend / vatMultiplier;
 
