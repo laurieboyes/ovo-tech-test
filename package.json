@@ -2,7 +2,7 @@
   "name": "ovo",
   "version": "1.0.0",
   "scripts": {
-    "build": "mkdir dist; ./node_modules/.bin/nexe -i src/commands/usage.js -o dist/usage; ./node_modules/.bin/nexe -i src/commands/cost.js -o dist/cost",
+    "build": "mkdir dist; ./node_modules/.bin/nexe -i src/commands/usage.js -o dist/usage; ./node_modules/.bin/nexe -i src/commands/cost.js -o dist/cost; ./node_modules/.bin/nexe -i src/commands/cost-tariff.js -o dist/cost-tariff",
     "unit-test": "./node_modules/mocha/bin/mocha ./test/unit-tests/**/*.spec.js",
     "end-to-end-test": "npm run build; ./node_modules/mocha/bin/mocha ./test/end-to-end-tests.spec.js",
     "test": "npm run unit-test; npm run end-to-end-test"

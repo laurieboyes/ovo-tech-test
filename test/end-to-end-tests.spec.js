@@ -36,4 +36,15 @@ describe('End-to-end tests', () => {
 				);
 		});
 	});
+
+	describe('cost-tariff', () => {
+		it('should respond with the expected values', async () => {
+			expect(await getExecutionResults('dist/cost-tariff fake-tariff 0.1397 0.0296 8.75 2000 2300'))
+				.to.equal('Total annual cost:\n' +
+					'better-energy 566.54\n' +
+					'2yr-fixed 585.35\n' +
+					'fake-tariff 585.35\n' +
+					'simpler-energy 592.87');
+		});
+	});
 });

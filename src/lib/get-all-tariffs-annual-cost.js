@@ -1,7 +1,9 @@
 const prices = require('../config/prices.json');
 const getTariffAnnualCost = require('./get-tariff-annual-cost');
 
-module.exports = ({ powerUsage, gasUsage }) => {
+module.exports = ({ powerUsage, gasUsage, additionalTariffs }) => {
+
+	// todo document better: additionalTariffCost e.g. {name: 'sdfsdf', annualCost:1234.1}
 
 	// I recognise the irony of deciding not to use TypeScript and then doing all of these manual type checks
 	if (isNaN(powerUsage)) {
@@ -10,8 +12,12 @@ module.exports = ({ powerUsage, gasUsage }) => {
 	if (isNaN(gasUsage)) {
 		throw new Error(`Invalid gas usage provided: ${typeof gasUsage} ${gasUsage}`);
 	}
+	// todo validate additionalTariffs
 
 	return prices
+	
+		// include additional tariff if provided
+		.concat(additionalTariffs || [])
 
 		// filter out tariffs that don't cater to usage
 		.filter(tariff => {
