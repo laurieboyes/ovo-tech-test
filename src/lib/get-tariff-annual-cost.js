@@ -20,8 +20,8 @@ module.exports = ({ monthlyStandingCharge, powerRate, gasRate, powerUsage, gasUs
 		throw new Error(`Invalid gasUsage provided: ${typeof gasUsage} ${gasUsage}`);
 	}
 
-	const annualPowerCost = powerUsage > 0 ? powerRate * powerUsage : 0;
-	const annualGasCost = gasUsage > 0 ? gasRate * gasUsage : 0;
+	const annualPowerCost = powerRate * powerUsage;
+	const annualGasCost = gasRate * gasUsage;
 
 	// include standing charge for each fuel type customer is being supplied for
 	const annualStandingCharge = (
