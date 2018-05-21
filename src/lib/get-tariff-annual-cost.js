@@ -1,7 +1,7 @@
 const vatMultiplier = require('../config/vat-multiplier.json');
 const toTwoDecimalPlaces = require('./util/to-two-decimal-places');
 
-module.exports = ({ monthlyStandingCharge, powerRate, gasRate, powerUsage, gasUsage }) => {
+module.exports = ({ monthlyStandingCharge, powerRate, gasRate, powerUsage, gasUsage, discountMultiplier}) => {
 
 	// I recognise the irony of deciding not to use TypeScript and then doing all of these manual type checks
 	if (isNaN(monthlyStandingCharge)) {
@@ -19,6 +19,7 @@ module.exports = ({ monthlyStandingCharge, powerRate, gasRate, powerUsage, gasUs
 	if (isNaN(gasUsage)) {
 		throw new Error(`Invalid gasUsage provided: ${typeof gasUsage} ${gasUsage}`);
 	}
+	// todo discountMultiplier validation
 
 	const annualPowerCost = powerRate * powerUsage;
 	const annualGasCost = gasRate * gasUsage;
@@ -35,7 +36,9 @@ module.exports = ({ monthlyStandingCharge, powerRate, gasRate, powerUsage, gasUs
 		annualStandingCharge
 	);
 
-	const annualCost = annualCostExcludingVat * vatMultiplier;
+	const validatedDiscountMultiplier = discountMultiplier || 1;
+
+	const annualCost = annualCostExcludingVat * validatedDiscountMultiplier * vatMultiplier;
 
 	return toTwoDecimalPlaces(annualCost);
 }

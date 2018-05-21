@@ -5,7 +5,8 @@
 			"power": 0.1367,
 			"gas": 0.0288
 		},
-		"standing_charge": 8.33
+		"standing_charge": 8.33,
+		"discountMultiplier": 0.8
 	},
 	{
 		"tariff": "2yr-fixed",

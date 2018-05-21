@@ -72,6 +72,22 @@ describe('getTariffAnnualCost()', () => {
 		})).to.equal(1564.93)
 	})
 
+	it('should apply a discount where it exists', () => {
+		// (assuming gas and power provided)
+		// expectedAnnualCost = ( (powerUsage * powerRate) + (gasUsage * gasRate) + (monthlyStandingCharge * 12 * 2) ) * discountMultiplier * vatMultiplier
+		// expectedAnnualCost = ( (60 * 3) + (200 * 5) + (10 * 2 * 12) ) * 0.8 * 1.1
+		const expectedAnnualCost = 1249.6;
+
+		expect(getTariffAnnualCost({
+			monthlyStandingCharge: 10,
+			powerRate: 3,
+			gasRate: 5,
+			powerUsage: 60,
+			gasUsage: 200,
+			discountMultiplier: 0.8
+		})).to.equal(expectedAnnualCost)
+	})
+
 	describe('parameter validation', () => {
 		it('should throw an error if a non-number monthlyStandingCharge is provided', () => {
 			expect(() => getTariffAnnualCost({
